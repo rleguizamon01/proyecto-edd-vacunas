@@ -5,6 +5,8 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="src"/>
+	<classpathentry excluding="Fuentes/|Jar/" kind="src" path="src"/>
+	<classpathentry kind="src" path="src/Fuentes"/>
+	<classpathentry kind="src" path="src/Jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
