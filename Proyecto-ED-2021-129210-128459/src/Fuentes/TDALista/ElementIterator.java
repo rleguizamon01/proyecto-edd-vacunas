@@ -1,4 +1,4 @@
-package TDALIsta;
+package TDALista;
 
 import java.lang.*;
 import java.util.*;

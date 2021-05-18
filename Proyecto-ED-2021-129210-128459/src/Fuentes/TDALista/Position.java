@@ -1,4 +1,4 @@
-package TDALIsta;
+package TDALista;
 
 public interface Position<E>
 {
