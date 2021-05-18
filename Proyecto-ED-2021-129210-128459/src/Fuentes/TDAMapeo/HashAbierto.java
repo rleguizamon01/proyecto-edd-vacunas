@@ -71,9 +71,9 @@ public class HashAbierto<K,V> implements Map<K,V> {
 		if(t == null)
 			n++;
 		
-		if(n/N >= factor) 
+		if((float)n/N >= factor)
 			reHash();
-		
+			
 		return t;
 	}
 	
