@@ -221,17 +221,6 @@ public class ListaDobleSinCentinelas<E> implements PositionList<E>{
 		return aux;
 	}
 	
-	public String toString() {
-		Iterator<E> it = iterator(); // Le pido el iterador a la lista this.
-		String s = "[";
-		while( it.hasNext() ) {
-			s += it.next(); // Hay un cast implícito de E a String, equivale a: s+=it.next().toString();
-			if( it.hasNext() ) // Hago append de una coma si quedan elementos
-				s += ", ";
-		}
-		s += "]";
-		return s;
-	}
 	
 	@Override
 	public Iterator<E> iterator() {
