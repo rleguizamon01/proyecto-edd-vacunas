@@ -1,19 +1,10 @@
-package TDALIsta;
+package TDALista;
 
 import java.util.Iterator;
 
-import TDALIsta.BoundaryViolationException;
-import TDALIsta.EmptyListException;
-import TDALIsta.InvalidPositionException;
-import TDALIsta.Position;
-import TDALIsta.PositionList;
-
-
-
 public class ListaDobleSinCentinelas<E> implements PositionList<E>{
 	
-	
-		private class DNodo<E> implements Position<E>{
+	private class DNodo<E> implements Position<E>{
 		
 		private E elemento;
 		private DNodo<E> siguiente,previo;
@@ -26,11 +17,11 @@ public class ListaDobleSinCentinelas<E> implements PositionList<E>{
 		} 
 		
 		public DNodo( E item ) { 
-			this(item,null,null); 
+			this(item, null, null); 
 		
 		}
 		public DNodo() { 
-			this(null,null,null); 
+			this(null, null, null); 
 		
 		}
 		
@@ -46,6 +37,7 @@ public class ListaDobleSinCentinelas<E> implements PositionList<E>{
 		public void setPrevio( DNodo<E> prev ){ 
 			previo=prev;
 		}
+		
 		// Getters:
 		public E getElemento() { 
 			return elemento; 
@@ -60,19 +52,13 @@ public class ListaDobleSinCentinelas<E> implements PositionList<E>{
 		}
 		@Override
 		public E element() {
-			// TODO Auto-generated method stub
 			return elemento;
 		}
 		
 	}
-	
-	
+		
 	protected DNodo<E> cabeza,rabo;
 	protected int tamaño;
-	
-	
-	
-	
 	
 	public ListaDobleSinCentinelas() {
 		cabeza = null;
@@ -80,16 +66,13 @@ public class ListaDobleSinCentinelas<E> implements PositionList<E>{
 		tamaño = 0;
 	}
 	
-	
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
 		return tamaño;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
 		return tamaño==0;
 	}
 
@@ -133,7 +116,7 @@ public class ListaDobleSinCentinelas<E> implements PositionList<E>{
 			nuevo.setPrevio(null);
 			cabeza=nuevo;
 			rabo=nuevo;
-		}else {
+		} else {
 			nuevo.setPrevio(null);
 			nuevo.setSiguiente(cabeza);
 			cabeza.setPrevio(nuevo);
@@ -151,7 +134,7 @@ public class ListaDobleSinCentinelas<E> implements PositionList<E>{
 			nuevo.setPrevio(null);
 			cabeza=nuevo;
 			rabo=nuevo;
-		}else {
+		} else {
 			nuevo.setSiguiente(null);
 			nuevo.setPrevio(rabo);
 			rabo.setSiguiente(nuevo);
@@ -168,7 +151,7 @@ public class ListaDobleSinCentinelas<E> implements PositionList<E>{
 		nuevo.setPrevio(pos);
 		if (pos==rabo) {
 			rabo=nuevo;
-		}else {
+		} else {
 			nuevo.getSiguiente().setPrevio(nuevo);
 		}
 		pos.setSiguiente(nuevo);
@@ -238,10 +221,21 @@ public class ListaDobleSinCentinelas<E> implements PositionList<E>{
 		return aux;
 	}
 	
+	public String toString() {
+		Iterator<E> it = iterator(); // Le pido el iterador a la lista this.
+		String s = "[";
+		while( it.hasNext() ) {
+			s += it.next(); // Hay un cast implícito de E a String, equivale a: s+=it.next().toString();
+			if( it.hasNext() ) // Hago append de una coma si quedan elementos
+				s += ", ";
+		}
+		s += "]";
+		return s;
+	}
+	
 	@Override
 	public Iterator<E> iterator() {
-		// TODO Auto-generated method stub
-		return  new ElementIterator<E>( this );
+		return new ElementIterator<E>( this );
 	}
 
 	@Override
@@ -259,7 +253,6 @@ public class ListaDobleSinCentinelas<E> implements PositionList<E>{
 		lista.addLast(ultimo);
 		}	
 		 catch (EmptyListException | InvalidPositionException | BoundaryViolationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		}
