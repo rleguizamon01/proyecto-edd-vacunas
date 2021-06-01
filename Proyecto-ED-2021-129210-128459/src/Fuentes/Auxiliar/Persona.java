@@ -8,7 +8,6 @@ public class Persona {
 	
 	
 	public Persona(String nombre, String apellido, int dni) {
-		super();
 		this.nombre = nombre;
 		this.apellido = apellido;
 		DNI = dni;
@@ -31,5 +30,10 @@ public class Persona {
 	public void setDNI(int dNI) {
 		DNI = dNI;
 	}
+	@Override
+	public String toString() {
+		return "Persona [DNI=" + DNI + ", apellido=" + apellido + ", nombre=" + nombre + "]";
+	}
 
+	
 }

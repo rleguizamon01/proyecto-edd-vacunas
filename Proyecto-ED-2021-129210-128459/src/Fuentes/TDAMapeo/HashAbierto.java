@@ -1,7 +1,6 @@
 package TDAMapeo;
 
-import TDALista.ListaDobleSinCentinelas;
-import TDALista.PositionList;
+import TDALista.*;
 
 public class HashAbierto<K,V> implements Map<K,V> {
 	
