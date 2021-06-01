@@ -44,12 +44,8 @@ public class TabListadoPacientes extends JPanel {
 	private class ActionListenerBtnListar implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			try {
-				String lista = "";
-				for(Persona per: logica.listaPacientes()) {
-					lista += per.toString();
-					lista += "\n";
-				}
-				textAreaListado.setText(lista);
+				
+				textAreaListado.setText(logica.listaPacientes());
 			} catch (EmptyPriorityQueueException | InvalidKeyException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

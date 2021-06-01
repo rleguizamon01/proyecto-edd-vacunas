@@ -25,21 +25,22 @@ public class Logica {
 		
 	}
 	
-	public Persona pacienteRiesgoso() throws EmptyPriorityQueueException {
+	public String pacienteRiesgoso() throws EmptyPriorityQueueException {
 		
-		return cola.min().getValue();
+		return cola.min().getValue().toString();
 		
 	}
 	
-	public PositionList<Persona> listaPacientes() throws EmptyPriorityQueueException, TDAColaCP.InvalidKeyException {
+	public String listaPacientes() throws EmptyPriorityQueueException, TDAColaCP.InvalidKeyException {
 		ComparadorInverso<Integer> comp= new ComparadorInverso<Integer>();
 		Heap<Integer,Persona> colaAux = new Heap<Integer,Persona>(comp);
-		PositionList<Persona> lista=new ListaDobleSinCentinelas<Persona>();
+		String lista = "";
 		TDAColaCP.Entry<Integer,Persona> paciente;
 		
 		while (!cola.isEmpty()) {
 			paciente=cola.removeMin();
-			lista.addLast(paciente.getValue());
+			lista += paciente.getValue().toString();
+			lista += "\n";
 			colaAux.insert(paciente.getKey(),paciente.getValue());
 		}
 		
@@ -48,10 +49,10 @@ public class Logica {
 		return lista;
 	}
 	
-	public PositionList<Persona> listaPacientesInverso() throws EmptyPriorityQueueException, TDAColaCP.InvalidKeyException, EmptyStackException {
+	public String listaPacientesInverso() throws EmptyPriorityQueueException, TDAColaCP.InvalidKeyException, EmptyStackException {
 		ComparadorInverso<Integer> comp= new ComparadorInverso<Integer>();
 		Heap<Integer,Persona> colaAux = new Heap<Integer,Persona>(comp);
-		PositionList<Persona> lista=new ListaDobleSinCentinelas<Persona>();
+		String lista = "";
 		Stack<Persona> pila= new PilaConEnlaces<Persona>();
 		TDAColaCP.Entry<Integer,Persona> paciente;
 		
@@ -62,7 +63,8 @@ public class Logica {
 		}
 		
 		while (!pila.isEmpty()) {
-			lista.addLast(pila.pop());
+			lista += pila.pop().toString();
+			lista += "\n";
 		}
 		
 		cola=colaAux;
@@ -97,9 +99,9 @@ public class Logica {
 		return encontre;
 	}
 	
-	public Persona pacienteHistorico(int dni) throws TDAMapeo.InvalidKeyException{
+	public String pacienteHistorico(int dni) throws TDAMapeo.InvalidKeyException{
 		
-		return mapeoEliminados.get(dni);
+		return mapeoEliminados.get(dni).toString();
 	
 	}
 }
