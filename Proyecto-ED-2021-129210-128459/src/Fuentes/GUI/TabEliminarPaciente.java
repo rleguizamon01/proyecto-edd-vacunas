@@ -10,8 +10,10 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
+import Auxiliar.NotFoundException;
 import Auxiliar.Persona;
 import Programa.Logica;
+import TDAColaCP.EmptyPriorityQueueException;
 import TDAColaCP.InvalidKeyException;
 
 public class TabEliminarPaciente extends JPanel {
@@ -49,11 +51,15 @@ public class TabEliminarPaciente extends JPanel {
 			Persona per = null;
 			try {
 				per = logica.eliminar(Integer.parseInt(textDNI.getText()));
-				JOptionPane.showMessageDialog(null, per.toString() , "Eliminado exitosamente", JOptionPane.PLAIN_MESSAGE);
-			} catch (NumberFormatException | InvalidKeyException e1) {
-				JOptionPane.showMessageDialog(null, e1.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-			} catch (Exception e2) {
-				JOptionPane.showMessageDialog(null, e2.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null , "a", "Eliminado exitosamente", JOptionPane.PLAIN_MESSAGE);
+			} catch (NumberFormatException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage() + "El DNI debe estar compuesto únicamente por números", "ERROR", JOptionPane.ERROR_MESSAGE);
+			} catch(InvalidKeyException | TDAMapeo.InvalidKeyException e2) {
+				JOptionPane.showMessageDialog(null, e2.getMessage() + "DNI incorrecto" , "ERROR", JOptionPane.ERROR_MESSAGE);
+			} catch(NotFoundException e3) {
+				JOptionPane.showMessageDialog(null, e3.getMessage() + "El DNI ingresado no existe", "ERROR", JOptionPane.ERROR_MESSAGE);
+			} catch(EmptyPriorityQueueException e5) {
+				JOptionPane.showMessageDialog(null, e5.getMessage() + "No hay ningún paciente ingresado", "ERROR", JOptionPane.ERROR_MESSAGE);
 			}
 			
 		}

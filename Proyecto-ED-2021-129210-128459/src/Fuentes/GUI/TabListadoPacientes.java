@@ -47,8 +47,7 @@ public class TabListadoPacientes extends JPanel {
 				
 				textAreaListado.setText(logica.listaPacientes());
 			} catch (EmptyPriorityQueueException | InvalidKeyException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1.getMessage() + "No hay pacientes para mostrar", "ERROR", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}

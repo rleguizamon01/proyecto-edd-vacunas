@@ -9,7 +9,7 @@ import TDAPila.*;
 
 public class Logica {
 	
-	Heap<Integer,Persona> cola;
+	PriorityQueue<Integer,Persona> cola;
 	HashAbierto<Integer,Persona> mapeoEliminados;
 	
 	public Logica() {
@@ -18,10 +18,12 @@ public class Logica {
 		mapeoEliminados = new HashAbierto<Integer,Persona> ();
 	}
 	
-	public void inscripción(String nombre, String apellido, int dni, int grupo) throws TDAColaCP.InvalidKeyException {
+	public Persona inscribir(String nombre, String apellido, int dni, int grupo) throws TDAColaCP.InvalidKeyException {
 		
 		Persona per=new Persona(nombre,apellido,dni);	
 		cola.insert(grupo,per);
+		
+		return per;
 		
 	}
 	
@@ -32,29 +34,38 @@ public class Logica {
 	}
 	
 	public String listaPacientes() throws EmptyPriorityQueueException, TDAColaCP.InvalidKeyException {
+		
+		if(cola.isEmpty())
+			throw new EmptyPriorityQueueException("lista():: La cola está vacía");
+		
 		ComparadorInverso<Integer> comp= new ComparadorInverso<Integer>();
-		Heap<Integer,Persona> colaAux = new Heap<Integer,Persona>(comp);
-		String lista = "";
-		TDAColaCP.Entry<Integer,Persona> paciente;
+		PriorityQueue<Integer,Persona> colaAux = new Heap<Integer,Persona>(comp);
+		String listado = "";
+		TDAColaCP.Entry<Integer,Persona> paciente;		
 		
 		while (!cola.isEmpty()) {
 			paciente=cola.removeMin();
-			lista += paciente.getValue().toString();
-			lista += "\n";
+			listado += paciente.getValue().toString();
+			listado += "\n";
 			colaAux.insert(paciente.getKey(),paciente.getValue());
 		}
 		
 		cola=colaAux;
 		
-		return lista;
+		return listado;
 	}
 	
 	public String listaPacientesInverso() throws EmptyPriorityQueueException, TDAColaCP.InvalidKeyException, EmptyStackException {
+		
+		if(cola.isEmpty())
+			throw new EmptyPriorityQueueException("listaInv():: La cola está vacía");
+		
 		ComparadorInverso<Integer> comp= new ComparadorInverso<Integer>();
-		Heap<Integer,Persona> colaAux = new Heap<Integer,Persona>(comp);
-		String lista = "";
+		PriorityQueue<Integer,Persona> colaAux = new Heap<Integer,Persona>(comp);
+		String listado = "";
 		Stack<Persona> pila= new PilaConEnlaces<Persona>();
 		TDAColaCP.Entry<Integer,Persona> paciente;
+		
 		
 		while (!cola.isEmpty()) {
 			paciente=cola.removeMin();
@@ -63,21 +74,26 @@ public class Logica {
 		}
 		
 		while (!pila.isEmpty()) {
-			lista += pila.pop().toString();
-			lista += "\n";
+			listado += pila.pop().toString();
+			listado += "\n";
 		}
 		
 		cola=colaAux;
 		
-		return lista;
+		return listado;
 	}
 	
 	
-	public boolean eliminar(int dni) throws EmptyPriorityQueueException, TDAColaCP.InvalidKeyException, TDAMapeo.InvalidKeyException{
+	public Persona eliminar(int dni) throws EmptyPriorityQueueException, TDAColaCP.InvalidKeyException, TDAMapeo.InvalidKeyException, NotFoundException{
+		
+		/*if(cola.isEmpty())
+			throw new EmptyPriorityQueueException("eliminar(dni):: La cola está vacía");*/
+		
 		ComparadorInverso<Integer> comp= new ComparadorInverso<Integer>();
-		Heap<Integer,Persona> colaAux = new Heap<Integer,Persona>(comp);
-		TDAColaCP.Entry<Integer,Persona> paciente;
+		PriorityQueue<Integer,Persona> colaAux = new Heap<Integer,Persona>(comp);
+		TDAColaCP.Entry<Integer,Persona> paciente = null;
 		boolean encontre=false;
+		
 		
 		while (!cola.isEmpty() && !encontre) {
 			paciente=cola.removeMin();
@@ -94,9 +110,10 @@ public class Logica {
 			cola.insert(paciente.getKey(),paciente.getValue());
 		}
 		
+		if(!encontre)
+			throw new NotFoundException("La persona con el DNI ingresado no existe");
 		
-		
-		return encontre;
+		return paciente.getValue();
 	}
 	
 	public String pacienteHistorico(int dni) throws TDAMapeo.InvalidKeyException{
