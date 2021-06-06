@@ -11,8 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
-import Auxiliar.Persona;
-
 import javax.swing.JOptionPane;
 import Programa.Logica;
 import TDAColaCP.InvalidKeyException;
@@ -69,21 +67,26 @@ public class TabInscripcion extends JPanel {
 		this.add(comboBoxGrupoR);
 		
 		JButton btnInscribir = new JButton("Inscribir");
-		btnInscribir.setBounds(10, 216, 89, 23);
+		btnInscribir.setBounds(10, 200, 89, 23);
 		this.add(btnInscribir);
 		btnInscribir.addActionListener((ActionListener) new ActionListenerBtnInscribir());
 	}
 	
 	private class ActionListenerBtnInscribir implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			Persona per = null;
 			try {
-				per = logica.inscribir(textNombre.getText(), textApellido.getText(), Integer.parseInt(textDNI.getText()), Integer.parseInt(comboBoxGrupoR.getSelectedItem().toString()));
-				JOptionPane.showMessageDialog(null, per.toString() + "GR: " + comboBoxGrupoR.getSelectedItem().toString(), "Inscripción exitosa", JOptionPane.PLAIN_MESSAGE);
-			} catch (NumberFormatException | InvalidKeyException e1) {
-				JOptionPane.showMessageDialog(null, e1.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-			} catch (Exception e2) {
-				JOptionPane.showMessageDialog(null, e2.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+				logica.inscribir(textNombre.getText(), textApellido.getText(), Integer.parseInt(textDNI.getText()), Integer.parseInt(comboBoxGrupoR.getSelectedItem().toString()));
+				JOptionPane.showMessageDialog(null, "El paciente fue agregado exitosamente", "Inscripción exitosa", JOptionPane.PLAIN_MESSAGE);
+				textNombre.setText("");
+				textApellido.setText("");
+				textDNI.setText("");
+				comboBoxGrupoR.setSelectedIndex(0);
+			} catch (NumberFormatException e1) {
+				JOptionPane.showMessageDialog(null, "El DNI no puede ser vacío y debe estar compuesto solo por números", "ERROR", JOptionPane.ERROR_MESSAGE);
+			} catch(InvalidKeyException e2) {
+				JOptionPane.showMessageDialog(null, "Error inesperado", "ERROR", JOptionPane.ERROR_MESSAGE);
+			} catch (Exception e3) {
+				JOptionPane.showMessageDialog(null, e3.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
 			}
 			
 		}
