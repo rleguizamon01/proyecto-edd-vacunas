@@ -87,10 +87,8 @@ public class TabListadoPacientes extends JPanel {
 				textAreaListado.setText("");
 				textAreaPacienteMasRiesgoso.setText("");
 				JOptionPane.showMessageDialog(null, "No hay pacientes para mostrar", "ERROR", JOptionPane.ERROR_MESSAGE);
-			} catch (InvalidKeyException | EmptyStackException e2) {
-				JOptionPane.showMessageDialog(null, "Error inesperado", "ERROR", JOptionPane.ERROR_MESSAGE);
-			} catch(Exception e3) {
-				JOptionPane.showMessageDialog(null, e3.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+			} catch(Exception e1) {
+				JOptionPane.showMessageDialog(null, "Error inesperado: " + e1.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}

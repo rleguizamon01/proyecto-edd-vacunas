@@ -47,7 +47,14 @@ public class Logica {
 		return cola.min().getValue().toString();
 		
 	}
-
+	
+	/**
+	 * 
+	 * @return Una cadena con todos los pacientes ordenados del mas riesgoso al menos riesgoso 
+	 * @throws EmptyPriorityQueueException  si la cola esta vacia
+	 * @throws TDAColaCP.InvalidKeyException si uno de los pacientes de la cola tiene clave nula 
+	 */
+	
 	public String listaPacientes() throws EmptyPriorityQueueException, TDAColaCP.InvalidKeyException {
 		
 		if(cola.isEmpty())
@@ -138,6 +145,7 @@ public class Logica {
 		}
 		
 		while (!colaAux.isEmpty()) {
+		
 
 			paciente=colaAux.removeMin();
 			cola.insert(paciente.getKey(),paciente.getValue());
@@ -148,8 +156,7 @@ public class Logica {
 		
 		return paciente.getValue();
 	}
-	
-	/**
+		/**
 	 * 
 	 * @param dni DNI de la persona que se va a eliminar
 	 * @return Una cadena con la persona eliminada
@@ -158,11 +165,10 @@ public class Logica {
 	 */
 	
 	public String pacienteHistorico(int dni) throws TDAMapeo.InvalidKeyException, NotFoundException{
-		
 		Persona per=mapeoEliminados.get(dni);
 		if (per==null)
 			throw new NotFoundException("La persona con el DNI ingresado no se ha eliminado");
 		return per.toString();
-	
 	}
+
 }

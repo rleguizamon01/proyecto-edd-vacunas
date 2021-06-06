@@ -82,11 +82,9 @@ public class TabInscripcion extends JPanel {
 				textDNI.setText("");
 				comboBoxGrupoR.setSelectedIndex(0);
 			} catch (NumberFormatException e1) {
-				JOptionPane.showMessageDialog(null, "El DNI no puede ser vacío y debe estar compuesto solo por números", "ERROR", JOptionPane.ERROR_MESSAGE);
-			} catch(InvalidKeyException e2) {
-				JOptionPane.showMessageDialog(null, "Error inesperado", "ERROR", JOptionPane.ERROR_MESSAGE);
-			} catch (Exception e3) {
-				JOptionPane.showMessageDialog(null, e3.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "El campo DNI no puede estar vacío y debe estar compuesto solo por números", "ERROR", JOptionPane.ERROR_MESSAGE);
+			} catch(Exception e1) {
+				JOptionPane.showMessageDialog(null, "Error inesperado: " + e1.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
 			}
 			
 		}
