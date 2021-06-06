@@ -12,13 +12,11 @@ public class ColaConEnlaces<E> implements Queue<E>{
 	}
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
 		return tam;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
 		return tam==0;
 	}
 
