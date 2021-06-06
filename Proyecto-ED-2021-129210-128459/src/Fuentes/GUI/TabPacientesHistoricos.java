@@ -57,8 +57,6 @@ public class TabPacientesHistoricos extends JPanel {
 				textDNI.setText("");
 			} catch (NumberFormatException e1) {
 				JOptionPane.showMessageDialog(null, "El DNI debe estar compuesto únicamente por números", "ERROR", JOptionPane.ERROR_MESSAGE);
-			} catch (NotFoundException e1) {
-				JOptionPane.showMessageDialog(null, "El DNI ingresado no corresponde a un paciente eliminado", "ERROR", JOptionPane.ERROR_MESSAGE);
 			} catch (TDAMapeo.InvalidKeyException e1) {
 				JOptionPane.showMessageDialog(null, "Error inesperado", "ERROR", JOptionPane.ERROR_MESSAGE);
 			}
