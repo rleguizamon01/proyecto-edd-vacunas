@@ -2,7 +2,16 @@ package TDAColaCP;
 
 import java.util.Comparator;
 
+/**
+ * Clase que implementa la interfaz PriorityQueue
+ */
+
 public class Heap<K,V> implements PriorityQueue<K,V>{
+	
+	/**
+	 * Clase auxiliar que implementa la interfaz Entry. 
+	 * Utilizada para ingresar pares de datos en la clase Heap 
+	 */
 	
 	private class Entrada<K,V> implements Entry<K,V>{
 		private K clave; private V valor;
@@ -55,8 +64,8 @@ public class Heap<K,V> implements PriorityQueue<K,V>{
 		if(key == null)
 			throw new InvalidKeyException("Clave nula");
 		
-		if (size==elems.length-1) {
-			Entrada<K,V> [] elemsNuevo=(Entrada<K,V> []) new Entrada[elems.length*2];
+		if (size==elems.length-1) { //Verifico si el arreglo de entradas esta lleno, en ese caso, duplico el espacio
+			Entrada<K,V> [] elemsNuevo=(Entrada<K,V> []) new Entrada[elems.length*2]; 
 			for (int j=0;j<=size;j++)
 				elemsNuevo[j]=elems[j];
 			elems=elemsNuevo;
