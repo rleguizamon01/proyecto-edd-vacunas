@@ -32,7 +32,7 @@ public class Logica {
 		return cola.min().getValue().toString();
 		
 	}
-	
+
 	public String listaPacientes() throws EmptyPriorityQueueException, TDAColaCP.InvalidKeyException {
 		
 		if(cola.isEmpty())
@@ -86,8 +86,8 @@ public class Logica {
 	
 	public Persona eliminar(int dni) throws EmptyPriorityQueueException, TDAColaCP.InvalidKeyException, TDAMapeo.InvalidKeyException, NotFoundException{
 		
-		/*if(cola.isEmpty())
-			throw new EmptyPriorityQueueException("eliminar(dni):: La cola está vacía");*/
+		if(cola.isEmpty())
+			throw new EmptyPriorityQueueException("eliminar(dni):: La cola está vacía");
 		
 		ComparadorInverso<Integer> comp= new ComparadorInverso<Integer>();
 		PriorityQueue<Integer,Persona> colaAux = new Heap<Integer,Persona>(comp);
@@ -106,7 +106,7 @@ public class Logica {
 		}
 		
 		while (!colaAux.isEmpty()) {
-			paciente=cola.removeMin();
+			paciente=colaAux.removeMin();
 			cola.insert(paciente.getKey(),paciente.getValue());
 		}
 		

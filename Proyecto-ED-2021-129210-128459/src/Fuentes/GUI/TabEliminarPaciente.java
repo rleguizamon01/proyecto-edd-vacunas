@@ -28,12 +28,12 @@ public class TabEliminarPaciente extends JPanel {
 		this.setLayout(null);
 		
 		JLabel lblNmeroDeDocumetno_1 = new JLabel("N\u00FAmero de documento");
-		lblNmeroDeDocumetno_1.setBounds(10, 55, 258, 14);
+		lblNmeroDeDocumetno_1.setBounds(10, 58, 258, 14);
 		this.add(lblNmeroDeDocumetno_1);
 		
 		textDNI = new JTextField();
 		textDNI.setColumns(10);
-		textDNI.setBounds(10, 80, 269, 20);
+		textDNI.setBounds(10, 83, 269, 20);
 		this.add(textDNI);
 		
 		JButton btnEliminar = new JButton("Eliminar");
@@ -48,18 +48,18 @@ public class TabEliminarPaciente extends JPanel {
 	
 	private class ActionListenerBtnEliminar implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			Persona per = null;
 			try {
-				per = logica.eliminar(Integer.parseInt(textDNI.getText()));
-				JOptionPane.showMessageDialog(null , "a", "Eliminado exitosamente", JOptionPane.PLAIN_MESSAGE);
+				logica.eliminar(Integer.parseInt(textDNI.getText()));
+				JOptionPane.showMessageDialog(null , "El paciente fue eliminado exitosamente", "Eliminado exitosamente", JOptionPane.PLAIN_MESSAGE);
+				textDNI.setText("");
 			} catch (NumberFormatException e1) {
-				JOptionPane.showMessageDialog(null, e1.getMessage() + "El DNI debe estar compuesto únicamente por números", "ERROR", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "El DNI debe estar compuesto únicamente por números", "ERROR", JOptionPane.ERROR_MESSAGE);
 			} catch(InvalidKeyException | TDAMapeo.InvalidKeyException e2) {
-				JOptionPane.showMessageDialog(null, e2.getMessage() + "DNI incorrecto" , "ERROR", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "DNI incorrecto" , "ERROR", JOptionPane.ERROR_MESSAGE);
 			} catch(NotFoundException e3) {
-				JOptionPane.showMessageDialog(null, e3.getMessage() + "El DNI ingresado no existe", "ERROR", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "El DNI ingresado no existe", "ERROR", JOptionPane.ERROR_MESSAGE);
 			} catch(EmptyPriorityQueueException e5) {
-				JOptionPane.showMessageDialog(null, e5.getMessage() + "No hay ningún paciente ingresado", "ERROR", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "No hay ningún paciente ingresado", "ERROR", JOptionPane.ERROR_MESSAGE);
 			}
 			
 		}
