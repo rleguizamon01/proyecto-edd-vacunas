@@ -47,18 +47,7 @@ public class Logica {
 		return cola.min().getValue().toString();
 		
 	}
-<<<<<<< HEAD
 
-=======
-	
-	/**
-	 * 
-	 * @return Una cadena con todos los pacientes ordenados del mas riesgoso al menos riesgoso 
-	 * @throws EmptyPriorityQueueException  si la cola esta vacia
-	 * @throws TDAColaCP.InvalidKeyException si uno de los pacientes de la cola tiene clave nula 
-	 */
-	
->>>>>>> f04cffefd3f8706db92f3ca1f712f1b3c9da3d7a
 	public String listaPacientes() throws EmptyPriorityQueueException, TDAColaCP.InvalidKeyException {
 		
 		if(cola.isEmpty())
@@ -149,10 +138,7 @@ public class Logica {
 		}
 		
 		while (!colaAux.isEmpty()) {
-<<<<<<< HEAD
-=======
 
->>>>>>> f04cffefd3f8706db92f3ca1f712f1b3c9da3d7a
 			paciente=colaAux.removeMin();
 			cola.insert(paciente.getKey(),paciente.getValue());
 		}
