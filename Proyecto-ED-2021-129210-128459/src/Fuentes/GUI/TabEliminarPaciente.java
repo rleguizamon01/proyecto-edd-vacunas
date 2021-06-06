@@ -54,12 +54,16 @@ public class TabEliminarPaciente extends JPanel {
 				textDNI.setText("");
 			} catch (NumberFormatException e1) {
 				JOptionPane.showMessageDialog(null, "El campo DNI no puede estar vacío y debe estar compuesto únicamente por números", "ERROR", JOptionPane.ERROR_MESSAGE);
+				textDNI.setText("");
 			} catch(NotFoundException e1) {
 				JOptionPane.showMessageDialog(null, "El DNI ingresado no existe", "ERROR", JOptionPane.ERROR_MESSAGE);
+				textDNI.setText("");
 			} catch(EmptyPriorityQueueException e1) {
 				JOptionPane.showMessageDialog(null, "No hay ningún paciente ingresado", "ERROR", JOptionPane.ERROR_MESSAGE);
+				textDNI.setText("");
 			} catch(Exception e1) {
 				JOptionPane.showMessageDialog(null, "Error inesperado: " + e1.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+				textDNI.setText("");
 			}
 			
 		}
