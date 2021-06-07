@@ -7,3 +7,4 @@ public class InvalidPositionException extends Exception {
 		super(msj);
 	}
 }
+

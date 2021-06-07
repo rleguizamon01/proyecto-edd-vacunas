@@ -7,3 +7,4 @@ public class EmptyListException extends Exception {
 		super(msj);
 	}
 }
+

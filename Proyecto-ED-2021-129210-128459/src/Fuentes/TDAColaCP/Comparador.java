@@ -8,6 +8,5 @@ public class Comparador<E> implements java.util.Comparator<E> {
 		return ((Comparable<E>) o1).compareTo(o2);
 	}
 	
-	
 
 }

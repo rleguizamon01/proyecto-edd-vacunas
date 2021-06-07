@@ -6,3 +6,4 @@ public class BoundaryViolationException extends Exception {
 		super(msj);
 	}
 }
+
