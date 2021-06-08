@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"Auxiliar"},{"l":"GUI"},{"l":"Programa"},{"l":"TDACola"},{"l":"TDAColaCP"},{"l":"TDALista"},{"l":"TDAMapeo"},{"l":"TDAPila"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"Auxiliar"},{"l":"GUI"},{"l":"Programa"},{"l":"TDACola"},{"l":"TDAColaCP"},{"l":"TDALista"},{"l":"TDAMapeo"},{"l":"TDAPila"}]
