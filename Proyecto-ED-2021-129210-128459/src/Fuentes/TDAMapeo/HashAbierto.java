@@ -17,17 +17,30 @@ public class HashAbierto<K,V> implements Map<K,V> {
 			buckets[i] = new MapeoConLista<K,V>();
 	}
 	
-	
-	protected int hashCode(K clave) throws InvalidKeyException{
+	/**
+	 * Dada una clave devuelve un entero positivo
+	 * @param clave a mapear
+	 * @return entero positivo mapeado por la función 
+	 * @throws InvalidKeyException si la clave pasa por parámetro es inválida
+	 */
+	private int hashCode(K clave) throws InvalidKeyException{
 		checkKey(clave);
 		return Math.abs(clave.hashCode() % N);
 	}
 	
+	/**
+	 * Chequea que la clave pasada por parámetro no sea nula
+	 * @param clave a chequear
+	 * @throws InvalidKeyException si la clave es nula
+	 */
 	private void checkKey(K clave) throws InvalidKeyException{
 		if(clave == null)
 			throw new InvalidKeyException("Clave nula");
 	}
 	
+	/**
+	 * Amplia el tamaño de la tabla Hash al primo más cercano luego de duplicarlo
+	 */
 	private void reHash() {
 		Iterable<Entry<K,V>> entradas = entries();
 		
@@ -76,6 +89,11 @@ public class HashAbierto<K,V> implements Map<K,V> {
 		return t;
 	}
 	
+	/**
+	 * Devuelve el primo más cercano a partir del entero ingresado
+	 * @param entero 
+	 * @return número primo más cercano
+	 */
 	private int proxPrimo(int n) {
 		boolean aux = false;
 		int numPrimo = 0;

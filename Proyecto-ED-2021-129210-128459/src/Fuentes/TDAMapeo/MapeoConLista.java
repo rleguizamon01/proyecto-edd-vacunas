@@ -98,4 +98,42 @@ public class MapeoConLista<K,V> implements Map<K,V>{
 		}
 		return aux;
 	} // O(n)
+	
+	private class Entrada<K,V> implements Entry<K,V> {
+		private K clave;
+		private V valor;
+		
+		public Entrada(K clave, V valor) {
+			this.clave = clave;
+			this.valor = valor;
+		}
+		
+		public K getKey() {
+			return clave;
+		}
+		
+		public V getValue() {
+			return valor;
+		}
+		
+		/**
+		 * Establece una clave para una entrada
+		 * @param clave a establecer
+		 */
+		public void setKey(K clave) {
+			this.clave = clave;
+		}
+		
+		/**
+		 * Establece un valor para una entrada
+		 * @param valor a establecer
+		 */
+		public void setValue(V valor) {
+			this.valor = valor;
+		}
+		
+		public String toString() {
+			return "(" + getKey() + "," + getValue() + ")";
+		}
+	}
 }

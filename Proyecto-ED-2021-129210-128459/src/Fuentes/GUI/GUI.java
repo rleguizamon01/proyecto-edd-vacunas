@@ -1,36 +1,15 @@
 package GUI;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 
 import Programa.Logica;
-import javax.swing.JPanel;
 
 public class GUI {
 
 	private JFrame frame;
 	private final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 	protected Logica logica;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GUI window = new GUI();
-					window.frame.setVisible(true);
-					
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.
@@ -65,5 +44,9 @@ public class GUI {
 		new TabListadoPacientes(tabbedPane, logica);
 		new TabPacientesHistoricos(tabbedPane, logica);
 	
+	}
+	
+	public JFrame getFrame() {
+		return frame;
 	}
 }

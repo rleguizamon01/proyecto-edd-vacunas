@@ -1,10 +1,25 @@
 package Programa;
 
+import java.awt.EventQueue;
+
+import GUI.GUI;
+
+/**
+ * Ejecuta la aplicación
+ * @author Antich Octavio y Leguizamón Rodolfo
+ *
+ */
 public class Main {
-
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					GUI window = new GUI();
+					window.getFrame().setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
-
 }
