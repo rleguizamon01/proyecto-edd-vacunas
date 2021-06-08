@@ -15,12 +15,24 @@ public class Heap<K,V> implements PriorityQueue<K,V>{
 	
 	private class Entrada<K,V> implements Entry<K,V>{
 		private K clave; private V valor;
+		
+		/**
+		 * 
+		 * @param clave Clave de la entrada
+		 * @param valor Valor de la entrada
+		 */
 		public Entrada(K clave, V valor) {
 			this.clave = clave;
 			this.valor = valor;
 		}
+		
+		
 		public K getKey() { return clave; }
+
+		
 		public V getValue() { return valor; }
+		
+		
 		public String toString() {
 			return "(" + clave + ", " + valor + ")"; 
 		}
