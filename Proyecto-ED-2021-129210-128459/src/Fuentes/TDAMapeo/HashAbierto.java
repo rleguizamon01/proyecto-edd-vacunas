@@ -117,7 +117,7 @@ public class HashAbierto<K,V> implements Map<K,V> {
 	
 	/**
 	 * Devuelve el primo más cercano a partir del entero ingresado
-	 * @param entero 
+	 * @param n entero 
 	 * @return número primo más cercano
 	 */
 	private int proxPrimo(int n) {
