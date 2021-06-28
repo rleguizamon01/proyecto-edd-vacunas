@@ -10,8 +10,8 @@ public class InvalidPositionException extends Exception {
 	 * 
 	 * @param s mensaje de la excepcion
 	 */
-	public InvalidPositionException (String msj) {
-		super(msj);
+	public InvalidPositionException (String s) {
+		super(s);
 	}
 }
 

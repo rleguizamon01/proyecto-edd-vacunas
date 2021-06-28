@@ -9,7 +9,7 @@ public class InvalidKeyException extends Exception {
 	 * 
 	 * @param s mensaje de la excepcion
 	 */
-	public InvalidKeyException(String msg) {
-		super(msg);
+	public InvalidKeyException(String s) {
+		super(s);
 	}
 }

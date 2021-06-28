@@ -8,8 +8,8 @@ public class EmptyListException extends Exception {
 	 * 
 	 * @param s mensaje de la excepcion
 	 */
-	public EmptyListException (String msj) {
-		super(msj);
+	public EmptyListException (String s) {
+		super(s);
 	}
 }
 
