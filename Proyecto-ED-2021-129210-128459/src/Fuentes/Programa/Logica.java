@@ -2,6 +2,9 @@ package Programa;
 
 import Auxiliar.*;
 import TDAColaCP.*;
+import TDAColaCP.Entry;
+import TDALista.ListaDobleSinCentinelas;
+import TDALista.PositionList;
 import TDAMapeo.*;
 import TDAPila.*;
 
@@ -35,29 +38,28 @@ public class Logica {
 	 * @return Una cadena con el paciente mas riesgoso
 	 * @throws EmptyPriorityQueueException si la cola esta vacia
 	 */
-	public String pacienteRiesgoso() throws EmptyPriorityQueueException {
-		return cola.min().getValue().toString();
+	public Entry<Integer, Persona> pacienteRiesgoso() throws EmptyPriorityQueueException {
+		return cola.min();
 	}
 	
 	/**
-	 * 
-	 * @return Una cadena con todos los pacientes ordenados del mas riesgoso al menos riesgoso 
+	 * Agrega a una lista a todos los pacientes registrados de manera ordenada (más riesgoso a menos riesgoso)
+	 * @return Una lista con todos los pacientes ordenados del mas riesgoso al menos riesgoso 
 	 * @throws EmptyPriorityQueueException  si la cola está vacía
 	 * @throws TDAColaCP.InvalidKeyException si uno de los pacientes de la cola tiene clave nula 
 	 */
-	public String listaPacientes() throws EmptyPriorityQueueException, TDAColaCP.InvalidKeyException {
+	public PositionList<Persona> listaPacientes() throws EmptyPriorityQueueException, TDAColaCP.InvalidKeyException {
 		if(cola.isEmpty())
 			throw new EmptyPriorityQueueException("listaPacientes():: La cola está vacía");
 		
 		ComparadorInverso<Integer> comp = new ComparadorInverso<Integer>();
 		PriorityQueue<Integer,Persona> colaAux = new Heap<Integer,Persona>(comp);
-		String listado = "";
+		PositionList<Persona> listado = new ListaDobleSinCentinelas<Persona>();
 		TDAColaCP.Entry<Integer,Persona> paciente;		
 		
 		while(!cola.isEmpty()) {
 			paciente = cola.removeMin();
-			listado += paciente.getValue().toString();
-			listado += "\n";
+			listado.addLast(paciente.getValue());
 			colaAux.insert(paciente.getKey(),paciente.getValue());
 		}
 		
@@ -67,20 +69,20 @@ public class Logica {
 	}
 	
 	/**
-	 * 
-	 * @return Una cadena con todos los pacientes del menos riesgoso al mas riesgoso
+	 * Agrega a una lista a todos los pacientes registrados de manera ordenada (menos riesgoso a más riesgoso)
+	 * @return Una lista con todos los pacientes del menos riesgoso al mas riesgoso
 	 * @throws EmptyPriorityQueueException si la cola está vacia
 	 * @throws TDAColaCP.InvalidKeyException si uno de los pacientes de la cola tiene clave nula 
 	 * @throws EmptyStackException si la pila está vacia
 	 */
-	public String listaPacientesInverso() throws EmptyPriorityQueueException, TDAColaCP.InvalidKeyException, EmptyStackException {
+	public PositionList<Persona> listaPacientesInverso() throws EmptyPriorityQueueException, TDAColaCP.InvalidKeyException, EmptyStackException {
 		
 		if(cola.isEmpty())
 			throw new EmptyPriorityQueueException("listaPacientesInverso():: La cola está vacía");
 		
 		ComparadorInverso<Integer> comp = new ComparadorInverso<Integer>();
 		PriorityQueue<Integer,Persona> colaAux = new Heap<Integer,Persona>(comp);
-		String listado = "";
+		PositionList<Persona> listado = new ListaDobleSinCentinelas<Persona>();
 		Stack<Persona> pila = new PilaConEnlaces<Persona>();
 		TDAColaCP.Entry<Integer,Persona> paciente;
 		
@@ -91,10 +93,9 @@ public class Logica {
 			colaAux.insert(paciente.getKey(),paciente.getValue());
 		}
 		
-		while (!pila.isEmpty()) {
-			listado += pila.pop().toString();
-			listado += "\n";
-		}
+		while (!pila.isEmpty()) 
+			listado.addLast(pila.pop());
+		
 		
 		cola = colaAux;
 		
@@ -149,11 +150,11 @@ public class Logica {
 	 * @throws TDAMapeo.InvalidKeyException Si dni es nulo
 	 * @throws NotFoundException Si no hay ninguna persona que tenga ese dni en el mapeo
 	 */
-	public String pacienteHistorico(int dni) throws TDAMapeo.InvalidKeyException, NotFoundException{
-		Persona per=mapeoEliminados.get(dni);
-		if (per==null)
+	public Persona pacienteHistorico(int dni) throws TDAMapeo.InvalidKeyException, NotFoundException{
+		Persona per = mapeoEliminados.get(dni);
+		if (per == null)
 			throw new NotFoundException("La persona con el DNI ingresado no se ha eliminado");
-		return per.toString();
+		return per;
 	}
 
 }

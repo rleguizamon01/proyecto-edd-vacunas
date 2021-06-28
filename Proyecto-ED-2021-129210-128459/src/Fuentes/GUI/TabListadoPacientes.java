@@ -12,6 +12,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
+import Auxiliar.Persona;
 import Programa.Logica;
 import TDAColaCP.EmptyPriorityQueueException;
 import TDAColaCP.InvalidKeyException;
@@ -64,8 +65,14 @@ public class TabListadoPacientes extends JPanel {
 	private class ActionListenerBtnListar implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			try {	
-				textAreaListado.setText(logica.listaPacientes());
-				textAreaPacienteMasRiesgoso.setText(logica.pacienteRiesgoso());
+				String listadoPacientes = "";
+				
+				for(Persona paciente : logica.listaPacientes()) {
+					listadoPacientes += paciente.toString();
+					listadoPacientes += "\n";
+				}
+				textAreaListado.setText(listadoPacientes);
+				textAreaPacienteMasRiesgoso.setText(logica.pacienteRiesgoso().toString());
 			} catch (EmptyPriorityQueueException e1) {
 				JOptionPane.showMessageDialog(null, "No hay pacientes para mostrar", "ERROR", JOptionPane.ERROR_MESSAGE);
 				textAreaListado.setText("");
@@ -81,8 +88,15 @@ public class TabListadoPacientes extends JPanel {
 	private class ActionListenerBtnListarInvertido implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			try {	
-				textAreaListado.setText(logica.listaPacientesInverso());
-				textAreaPacienteMasRiesgoso.setText(logica.pacienteRiesgoso());
+				String listadoPacientesInv = "";
+				
+				for(Persona paciente : logica.listaPacientesInverso()) {
+					listadoPacientesInv += paciente.toString();
+					listadoPacientesInv += "\n";
+				}
+				
+				textAreaListado.setText(listadoPacientesInv);
+				textAreaPacienteMasRiesgoso.setText(logica.pacienteRiesgoso().toString());
 			} catch (EmptyPriorityQueueException e1) {
 				textAreaListado.setText("");
 				textAreaPacienteMasRiesgoso.setText("");

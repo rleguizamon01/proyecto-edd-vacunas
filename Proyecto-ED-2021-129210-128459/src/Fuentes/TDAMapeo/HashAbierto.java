@@ -2,19 +2,32 @@ package TDAMapeo;
 
 import TDALista.*;
 
+import TDALista.InvalidPositionException;
+import TDALista.Position;
+
+/**
+ * 
+ * Estructura de datos que utiliza una función hash para identificar datos
+ * mediante una clave
+ * @param <K> Clave de las entradas de la tabla hash
+ * @param <V> Valor de las entradas de la tabla hash
+ */
 public class HashAbierto<K,V> implements Map<K,V> {
 	
-	protected Map<K,V>[] buckets;
-	protected int n;
-	protected int N;
-	protected static final float factor = 0.9F;
+	protected PositionList<Entrada<K,V>>[] buckets;
+	protected int n; // cantidad de entradas
+	protected int N; // tamaño del arreglo
+	protected static final float factor = 0.5F;
 	
+	/**
+	 * Inicializa una instancia de la clase HashAbierto
+	 */
 	public HashAbierto() {
 		n = 0;
 		N = 13;
-		buckets = (Map<K,V>[]) new MapeoConLista[N];
+		buckets = (PositionList<Entrada<K,V>>[]) new ListaDobleSinCentinelas[N];
 		for(int i = 0; i < N; i++)
-			buckets[i] = new MapeoConLista<K,V>();
+			buckets[i] = new ListaDobleSinCentinelas<Entrada<K,V>>();
 	}
 	
 	/**
@@ -47,10 +60,10 @@ public class HashAbierto<K,V> implements Map<K,V> {
 		N = proxPrimo(N*2);
 
 		n = 0;
-		buckets = (Map<K,V>[]) new MapeoConLista[N];
+		buckets = (PositionList<Entrada<K,V>>[]) new ListaDobleSinCentinelas[N];
 		
 		for(int i = 0; i < N; i++) 
-			buckets[i] = new MapeoConLista<K,V>();
+			buckets[i] = new ListaDobleSinCentinelas<Entrada<K,V>>();
 		
 		for(Entry<K,V> e : entradas) {
 			try {
@@ -71,22 +84,35 @@ public class HashAbierto<K,V> implements Map<K,V> {
 
 	public V get(K key) throws InvalidKeyException {
 		checkKey(key);
+		PositionList<Entrada<K,V>> lista = buckets[hashCode(key)];
+
+		for(Position<Entrada<K, V>> p: lista.positions()) // c1 + n + n(c2)
+			if(p.element().getKey().equals(key))
+				return p.element().getValue();
 		
-		return buckets[hashCode(key)].get(key);
+		return null;
 	}
 
 	public V put(K key, V value) throws InvalidKeyException {
 		checkKey(key);
 
-		V t = buckets[hashCode(key)].put(key, value);
+		PositionList<Entrada<K,V>> bucket = buckets[hashCode(key)];
 		
-		if(t == null)
-			n++;
+		for(Position<Entrada<K,V>> p: bucket.positions()) { // c1 + n + n(c2)
+			if(p.element().getKey().equals(key)) {
+				V aux = p.element().getValue();
+				p.element().setValue(value);
+				return aux;
+			}
+		}
 		
+		bucket.addLast(new Entrada<K,V>(key, value)); // O(1)
+		n++;
+
 		if((float)n/N >= factor)
 			reHash();
 			
-		return t;
+		return null;
 	}
 	
 	/**
@@ -112,12 +138,22 @@ public class HashAbierto<K,V> implements Map<K,V> {
 	public V remove(K key) throws InvalidKeyException {
 		checkKey(key);
 		
-		V t = buckets[hashCode(key)].remove(key);
+		PositionList<Entrada<K,V>> bucket = buckets[hashCode(key)];
 		
-		if(t != null)
-			n--;
+		for(Position<Entrada<K, V>> p : bucket.positions())
+			if(p.element().getKey().equals(key)) {
+				try {
+					V value = p.element().getValue();
+					bucket.remove(p);
+					n--;
+					return value;
+				} catch (InvalidPositionException e) {
+					e.printStackTrace();
+				}
+				
+			}
 		
-		return t;
+		return null;
 	}
 
 	public Iterable<K> keys() {
@@ -125,8 +161,8 @@ public class HashAbierto<K,V> implements Map<K,V> {
 		
 		for(int i = 0; i < N; i++)
 			if(!buckets[i].isEmpty())
-				for(K key : buckets[i].keys())
-					l.addLast(key);
+				for(Entrada<K,V> entrada : buckets[i])
+					l.addLast(entrada.getKey());
 		return l;
 	}
 
@@ -135,8 +171,8 @@ public class HashAbierto<K,V> implements Map<K,V> {
 		
 		for(int i = 0; i < N; i++)
 			if(!buckets[i].isEmpty())
-				for(V val : buckets[i].values())
-					l.addLast(val);
+				for(Entrada<K,V> entrada : buckets[i])
+					l.addLast(entrada.getValue());
 		return l;
 	}
 
@@ -145,11 +181,54 @@ public class HashAbierto<K,V> implements Map<K,V> {
 		
 		for(int i = 0; i < N; i++)
 			if(!buckets[i].isEmpty())
-				for(Entry<K,V> e : buckets[i].entries())
+				for(Entry<K,V> e : buckets[i])
 					l.addLast(e);
 		return l;
 	}
 	
+	/**
+	 * Dupla de datos que relaciona clave y valor
+	 *
+	 * @param <K> clave de la entrada
+	 * @param <V> valor de la entrada
+	 */
+	private class Entrada<K,V> implements Entry<K,V> {
+		private K clave;
+		private V valor;
+		
+		public Entrada(K clave, V valor) {
+			this.clave = clave;
+			this.valor = valor;
+		}
+		
+		public K getKey() {
+			return clave;
+		}
+		
+		public V getValue() {
+			return valor;
+		}
+		
+		/**
+		 * Establece una clave para una entrada
+		 * @param clave a establecer
+		 */
+		public void setKey(K clave) {
+			this.clave = clave;
+		}
+		
+		/**
+		 * Establece un valor para una entrada
+		 * @param valor a establecer
+		 */
+		public void setValue(V valor) {
+			this.valor = valor;
+		}
+		
+		public String toString() {
+			return "(" + getKey() + "," + getValue() + ")";
+		}
+	}
 	
 
 }

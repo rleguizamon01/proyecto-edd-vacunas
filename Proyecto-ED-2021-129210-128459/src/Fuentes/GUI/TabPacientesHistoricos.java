@@ -52,7 +52,7 @@ public class TabPacientesHistoricos extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			try {
 				String cadenaPersona = "";
-				cadenaPersona = logica.pacienteHistorico(Integer.parseInt(textDNI.getText()));
+				cadenaPersona = logica.pacienteHistorico(Integer.parseInt(textDNI.getText())).toString();
 				JOptionPane.showMessageDialog(null , cadenaPersona, "Paciente encontrado exitosamente", JOptionPane.PLAIN_MESSAGE);
 				textDNI.setText("");
 			} catch (NumberFormatException e1) {
