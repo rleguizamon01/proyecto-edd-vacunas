@@ -2,54 +2,91 @@ package TDALista;
 
 import java.util.Iterator;
 
+/**
+ * Estructura de datos que implementa la interfaz positionList
+ * @param <E> Tipo de dato que contiene la lista
+ */
 public class ListaDobleSinCentinelas<E> implements PositionList<E>{
 	
+	/**
+	 * 
+	 * Estructura que se usa en las listas para enlazar sus elementos  
+	 * @param <E> Tipo de dato que contiene el nodo
+	 */	
 	private class DNodo<E> implements Position<E>{
 		
 		private E elemento;
 		private DNodo<E> siguiente,previo;
 		
-		// Constructores:
+		/**
+		 * Constructor de la clase nodo
+		 * @param item Item del nodo
+		 * @param sig Siguiente nodo
+		 * @param prev Nodo previo
+		 */
 		public DNodo( E item, DNodo<E> sig, DNodo<E> prev  ) {
 			elemento=item;
 			siguiente=sig;
 			previo=prev;
-		} 
+		}
 		
+		/**
+		 * Constructor de la clase nodo sobrecargado de la clase nodo
+		 * @param item Item del nodo
+		 */
 		public DNodo( E item ) { 
 			this(item, null, null); 
-		
 		}
+		
+		/**
+		 * Constructor de la clase nodo sobrecargado de la clase nodo
+		 */
 		public DNodo() { 
 			this(null, null, null); 
 		
 		}
 		
-		// Setters:
+		/**
+		 * 
+		 * @param elemento Nuevo elemento
+		 */
 		public void setElemento( E elemento ){ 
 			this.elemento = elemento; 
 		}
 		
+		/**
+		 * 
+		 * @param siguiente Siguiente nodo
+		 */
 		public void setSiguiente( DNodo<E> siguiente ){ 
 			this.siguiente = siguiente; 
 		}
 		
+		/**
+		 * 
+		 * @param prev Nodo previo
+		 */
 		public void setPrevio( DNodo<E> prev ){ 
 			previo=prev;
 		}
 		
-		// Getters:
-		public E getElemento() { 
-			return elemento; 
-		}
+		/**
+		 * 
+		 * @return Siguiente nodo
+		 */
 		
 		public DNodo<E> getSiguiente() { 
 			return siguiente; 
 		}
 		
+		/**
+		 * 
+		 * @return Nodo previo
+		 */
 		public DNodo<E> getPrevio() { 
 			return previo; 
 		}
+		
 		@Override
 		public E element() {
 			return elemento;
@@ -60,6 +97,9 @@ public class ListaDobleSinCentinelas<E> implements PositionList<E>{
 	protected DNodo<E> cabeza,rabo;
 	protected int tamaño;
 	
+	/**
+	 * Constructor de la clase ListaDobleSinCentinelas
+	 */
 	public ListaDobleSinCentinelas() {
 		cabeza = null;
 		rabo = null;

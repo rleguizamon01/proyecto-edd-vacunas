@@ -1,10 +1,16 @@
 package TDACola;
+
+/**
+ * 
+ * Estructura que se usa en las colas para enlazar sus elementos  
+ * @param <E> Tipo de dato que contiene el nodo
+ */
 public class Nodo<E> {
 	private E elemento;
 	private Nodo<E> siguiente;
 	
 	/**
-	 * 
+	 * Constructor de la clase nodo
 	 * @param item Item del nodo
 	 * @param sig Siguiente nodo
 	 */
@@ -14,7 +20,7 @@ public class Nodo<E> {
 	}
 	
 	/**
-	 * 
+	 * Constructor sobrecargado de la clase nodo
 	 * @param item Item del nodo
 	 */
 	public Nodo(E item) {

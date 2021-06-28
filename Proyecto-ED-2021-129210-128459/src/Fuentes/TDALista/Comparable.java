@@ -8,5 +8,5 @@ public interface Comparable<E> {
 	 * @return Entero que depende de la comparacion realizada
 	 */
 	public int compareTo(E element);
+	
 }
-

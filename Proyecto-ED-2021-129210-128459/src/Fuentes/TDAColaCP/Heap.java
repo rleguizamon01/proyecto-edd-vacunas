@@ -2,10 +2,12 @@ package TDAColaCP;
 
 import java.util.Comparator;
 
+
 /**
  * Clase que implementa la interfaz PriorityQueue
+ * @param <K> Tipo de dato de la clave, de los objetos que contiene la cola con prioridad
+ * @param <V> Tipo de dato del valor, de los objetos que contiene la cola con prioridad
  */
-
 public class Heap<K,V> implements PriorityQueue<K,V>{
 	
 	/**
@@ -17,7 +19,7 @@ public class Heap<K,V> implements PriorityQueue<K,V>{
 		private K clave; private V valor;
 		
 		/**
-		 * 
+		 * Constructor de la clase entrada
 		 * @param clave Clave de la entrada
 		 * @param valor Valor de la entrada
 		 */
@@ -26,13 +28,13 @@ public class Heap<K,V> implements PriorityQueue<K,V>{
 			this.valor = valor;
 		}
 		
-		
+		@Override
 		public K getKey() { return clave; }
 
-		
+		@Override
 		public V getValue() { return valor; }
 		
-		
+		@Override
 		public String toString() {
 			return "(" + clave + ", " + valor + ")"; 
 		}
@@ -42,107 +44,116 @@ public class Heap<K,V> implements PriorityQueue<K,V>{
 	protected Comparator<K> comp;
 	protected int size;
 	
-	
+	/**
+	 * Constructor de la clase heap
+	 * @param maxElems Cantidad inicial maxima de la cola
+	 * @param comp Comparador que se usara para ordenar los elementos de la cola
+	 */
 	public Heap(int maxElems, Comparator<K> comp ) {
-		// Creo un arreglo de maxElems entradas
+		
 		elems = (Entrada<K,V> []) new Entrada[maxElems];
-		this.comp = comp; // Me guardo el comparador del cliente
-		size = 0; // Digo que el árbol está vacío porque no tiene entradas
+		this.comp = comp; 
+		size = 0;
 	}
 	
+	/**
+	 * Constructor sobrecargado de la clase heap
+	 * @param comp Comparador que se usara para ordenar los elementos de la cola
+	 */
 	public Heap( Comparator<K> comp ) {
-		// Creo un arreglo de maxElems entradas
 		elems = (Entrada<K,V> []) new Entrada[8];
-		this.comp = comp; // Me guardo el comparador del cliente
-		size = 0; // Digo que el árbol está vacío porque no tiene entradas
+		this.comp = comp; 
+		size = 0; 
 	}
 	
+	@Override
 	public int size() {
-		return size; // Size es la cantidad de entradas del árbol
+		return size;
 	}
 	
+	@Override
 	public boolean isEmpty() {
-		return size == 0; // El árbol está vacío cuando no tiene entradas
+		return size == 0; 
 	}
 	
+	@Override
 	public Entry<K,V> min() throws EmptyPriorityQueueException{
 		if (isEmpty())
 			throw new EmptyPriorityQueueException("Cola con prioridad vacia.");
-		return elems[1]; // la componente 0 del arreglo no se usa
+		return elems[1];
 	}
 	
+	@Override
 	public Entry<K,V> insert(K key, V value) throws InvalidKeyException {
 		
 		if(key == null)
 			throw new InvalidKeyException("Clave nula");
 		
-		if (size==elems.length-1) { //Verifico si el arreglo de entradas esta lleno, en ese caso, duplico el espacio
+		if (size==elems.length-1) { 
 			Entrada<K,V> [] elemsNuevo=(Entrada<K,V> []) new Entrada[elems.length*2]; 
 			for (int j=0;j<=size;j++)
 				elemsNuevo[j]=elems[j];
 			elems=elemsNuevo;
 		}
 		
-		Entrada<K,V> entrada = new Entrada<K,V>(key, value); // Creo una entrada nueva
-		elems[++size] = entrada; // Incremento size y pongo la entrada nueva al final del arreglo
-		// Burbujeo para arriba.
-		int i = size; // seteo indice i de la posicion corriente en arreglo que es la última
-		boolean seguir = true; // Bandera para saber cuándo encontré la ubicación de entrada
+		Entrada<K,V> entrada = new Entrada<K,V>(key, value); 
+		elems[++size] = entrada; 
+		
+		int i = size; 
+		boolean seguir = true; 
 		while ( i>1 && seguir ) {
-			Entrada <K,V> elemActual = elems[i]; // obtengo entrada i-ésima
-			Entrada <K,V> elemPadre = elems[i/2]; // obtengo el padre de la entrada i-ésima
+			Entrada <K,V> elemActual = elems[i]; 
+			Entrada <K,V> elemPadre = elems[i/2]; 
 			if( comp.compare(elemActual.getKey(), elemPadre.getKey()) < 0) {
-				Entrada<K,V> aux = elems[i]; // Intercambio entradas si están desordenadas
+				Entrada<K,V> aux = elems[i]; 
 				elems[i] = elems[i/2];
 				elems[i/2] = aux;
-				i /= 2; // Reinicializo i con el índice de su padre
-			} else // Si no pude intercambiar => la entrada ya estaba ordenada
-				seguir = false; // Aviso que terminé
-		} // fin while
+				i /= 2;
+			} else
+				seguir = false; 
+		}
 		return entrada;
 	}
 	
+	@Override
 	public Entry<K,V> removeMin() throws EmptyPriorityQueueException {
-		Entry<K,V> entrada = min(); // Salvo valor a retornar.
+		Entry<K,V> entrada = min();
 		if( size == 1 ) { 
 			elems[1] = null; 
 			size = 0; 
 			return entrada; 
 		}
 		else {
-			// Paso la última entrada a la raíz y la borro del final del arreglo y decremento size:
 			elems[1] = elems[size]; 
 			elems[size] = null; 
 			size--;
-			// Burbujeo la nueva raíz hacia abajo buscando su ubicación correcta:
-			int i = 1; // i es mi ubicación corriente (Me ubico en la raíz)
-			boolean seguir = true; // Bandera para saber cuándo terminar
+			int i = 1; 
+			boolean seguir = true;
 			while ( seguir ) {
-				// Calculo la posición de los hijos izquierdo y derecho de i; y veo si existen realmente:
 				int hi = i*2; 
 				int hd = i*2+1;
 				boolean tieneHijoIzquierdo = hi <= size(); 
 				boolean tieneHijoDerecho = hd <= size();
 				if( !tieneHijoIzquierdo ) 
-					seguir = false; // Si no hay hijo izquierdo, llegué a una hoja
+					seguir = false; 
 				else {
-					int m; // En m voy a computar la posición del mínimo de los hijos de i:
+					int m; 
 					if( tieneHijoDerecho ) {
-						// Calculo cuál es el menor de los hijos usando el comparador de prioridades:
+						
 						if( comp.compare( elems[hi].getKey(), elems[hd].getKey()) < 0 ) 
 							m = hi;
 						else 
 							m = hd;
-					} else m = hi; // Si hay hijo izquierdo y no hay hijo derecho, el mínimo es el izq.
-				// Me fijo si hay que intercambiar el actual con el menor de sus hijos:
+					} else m = hi; 
+				
 				if( comp.compare(elems[i].getKey(), elems[m].getKey()) > 0 ) {
-					Entrada<K,V> aux = elems[i]; // Intercambio la entrada i con la m
+					Entrada<K,V> aux = elems[i]; 
 					elems[i] = elems[m];
 					elems[m] = aux;
-					i = m; // Reinicializo i para en la siguiente iteración actualizar a partir de posición m.
+					i = m; 
 				
-				} else seguir = false; // Si la comparación de entrada i con la m dio bien, termino.
-				}} // Fin while
+				} else seguir = false;
+				}} 
 				return entrada;
 			}
 		}

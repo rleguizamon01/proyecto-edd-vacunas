@@ -1,11 +1,17 @@
 package TDACola;
 
+/**
+ * Estructura de datos que implementa la interfaz Queue
+ * @param <E> Tipo de dato que contiene la cola
+ */
 public class ColaConEnlaces<E> implements Queue<E>{
 	
 	protected Nodo<E> head,tail;
 	protected int tam;
 	
-	
+	/**
+	 *  Constructor de una cola con enlaces
+	 */
 	public ColaConEnlaces() {
 		head = tail = null;
 		tam = 0;
