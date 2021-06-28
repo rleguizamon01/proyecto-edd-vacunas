@@ -8,12 +8,19 @@ import TDALista.PositionList;
 import TDAMapeo.*;
 import TDAPila.*;
 
+/**
+ * 
+ * Realiza la lógica del programa al manipular datos y luego enviarlos a la vista
+ *
+ */
 public class Logica {
 	
 	PriorityQueue<Integer,Persona> cola;
 	HashAbierto<Integer,Persona> mapeoEliminados;
 	
-	
+	/**
+	 * Inicializa una instancia de la clase Logica
+	 */
 	public Logica() {
 		ComparadorInverso<Integer> comp = new ComparadorInverso<Integer>();
 		cola = new Heap<Integer,Persona>(comp);
@@ -21,7 +28,7 @@ public class Logica {
 	}
 	
 	/**
-	 * 
+	 * Inscribe a un paciente a partir de sus datos personales
 	 * @param nombre Nombre del paciente
 	 * @param apellido Apellido del paciente
 	 * @param dni DNI del paciente
@@ -34,7 +41,7 @@ public class Logica {
 	}
 	
 	/**
-	 * 
+	 * Encuentra al paciente más riesgoso que esté almacenado
 	 * @return Una cadena con el paciente mas riesgoso
 	 * @throws EmptyPriorityQueueException si la cola esta vacia
 	 */
@@ -103,7 +110,7 @@ public class Logica {
 	}
 	
 	/**
-	 * 
+	 * Elimina a un paciente que esté almacenado a partir de su DNI
 	 * @param dni DNI del paciente que se va a eliminar
 	 * @throws EmptyPriorityQueueException si la cola esta vacia
 	 * @throws TDAColaCP.InvalidKeyException si uno de los pacientes de la cola tiene clave nula 
@@ -144,7 +151,7 @@ public class Logica {
 	}
 	
 	/**
-	 * 
+	 * Busca a los pacientes que hayan sido previamente eliminados a partir de su DNI
 	 * @param dni DNI de la persona que se va a eliminar
 	 * @return Una cadena con la persona eliminada
 	 * @throws TDAMapeo.InvalidKeyException Si dni es nulo
